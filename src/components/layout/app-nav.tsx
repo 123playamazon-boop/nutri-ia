@@ -6,8 +6,9 @@ import { Leaf, LayoutDashboard, BookOpen, MessageCircle, LogOut, Settings, Utens
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
+import { isDemoEnabled } from "@/lib/env";
 
-const IS_DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+const IS_DEMO = isDemoEnabled();
 
 const nav = [
   { href: "/dashboard", label: "Início", icon: LayoutDashboard },

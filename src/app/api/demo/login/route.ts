@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { validateDemoCredentials, DEMO_COOKIE, isDemoMode, resetDemoStore } from "@/lib/demo";
+import { validateDemoCredentials, DEMO_COOKIE, resetDemoStore } from "@/lib/demo";
+import { isDemoEnabled } from "@/lib/env";
 
 export async function POST(request: NextRequest) {
-  if (!isDemoMode()) {
+  if (!isDemoEnabled()) {
     return NextResponse.json({ error: "Demo mode desativado" }, { status: 403 });
   }
 

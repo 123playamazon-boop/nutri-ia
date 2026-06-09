@@ -10,8 +10,9 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 import { DEMO_EMAIL, DEMO_PASSWORD } from "@/lib/demo";
+import { isDemoEnabled } from "@/lib/env";
 
-const IS_DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+const IS_DEMO = isDemoEnabled();
 
 function LoginForm() {
   const router = useRouter();

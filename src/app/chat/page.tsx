@@ -6,8 +6,9 @@ import { AppNav } from "@/components/layout/app-nav";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import type { ChatMessage } from "@/types";
+import { isDemoEnabled } from "@/lib/env";
 
-const IS_DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+const IS_DEMO = isDemoEnabled();
 
 const SUGGESTIONS = [
   "Troque meu almoço",

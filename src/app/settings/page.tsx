@@ -11,7 +11,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 import { DIET_PROGRAM_LABELS, type UserProfile, type DietProgram, type Gender } from "@/types";
 
-const IS_DEMO = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+import { isDemoEnabled } from "@/lib/env";
+
+const IS_DEMO = isDemoEnabled();
 
 function SettingsForm() {
   const router = useRouter();
