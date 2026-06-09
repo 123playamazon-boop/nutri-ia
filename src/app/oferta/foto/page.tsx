@@ -7,8 +7,8 @@ import { UpsellOffer } from "@/components/upsell-offer";
  * >>> TROCAR pelos links do "Gerador de Upsell" da Cakto (produto: Análise por Foto).
  *     Aceitar/Recusar devem redirecionar pra /oferta/anual.
  */
-const ACCEPT_URL = "COLE_LINK_ACEITAR_DA_CAKTO";   // cobra 1-clique R$14,99 → /oferta/anual
-const DECLINE_URL = "COLE_LINK_RECUSAR_DA_CAKTO";  // sem cobrar → /oferta/anual
+const OFFER_ID = "mirz828"; // Cakto: Nutri IA - Analise por Foto (R$14,99/mês)
+const NEXT_URL = "https://nutri-ia-eta.vercel.app/oferta/anual"; // aceitar OU recusar → próxima oferta
 
 export default function Page() {
   return (
@@ -27,8 +27,8 @@ export default function Page() {
       priceNote="somado à sua assinatura · cancele quando quiser"
       acceptText="SIM! Quero analisar meu prato só com uma foto"
       declineText="Não, prefiro contar caloria na unha (ou no chute)"
-      acceptUrl={ACCEPT_URL}
-      declineUrl={DECLINE_URL}
+      offerId={OFFER_ID}
+      nextUrl={NEXT_URL}
     >
       <p>
         Vou ser sincera com você: você não larga a dieta por falta de vontade. Larga porque <b>anotar cada coisa é um saco</b> — e depois de 3 dias, cansa.

@@ -7,8 +7,8 @@ import { UpsellOffer } from "@/components/upsell-offer";
  * >>> TROCAR pelos links do "Gerador de Upsell" da Cakto (produto: Acesso 1 Ano).
  *     Aceitar/Recusar devem redirecionar pra /obrigado.
  */
-const ACCEPT_URL = "COLE_LINK_ACEITAR_DA_CAKTO";   // cobra 1-clique R$79,99 → /obrigado
-const DECLINE_URL = "COLE_LINK_RECUSAR_DA_CAKTO";  // sem cobrar → /obrigado
+const OFFER_ID = "zxpggzr"; // Cakto: Nutri IA - Acesso 1 Ano (R$79,99 unico)
+const NEXT_URL = "https://nutri-ia-eta.vercel.app/obrigado"; // aceitar OU recusar → pagina final
 
 export default function Page() {
   return (
@@ -27,8 +27,8 @@ export default function Page() {
       priceNote="pagamento único · 1 ano blindado · substitui sua mensalidade"
       acceptText="SIM! Quero 1 ANO completo por R$79,99"
       declineText="Não, prefiro pagar mês a mês e gastar até 5x mais"
-      acceptUrl={ACCEPT_URL}
-      declineUrl={DECLINE_URL}
+      offerId={OFFER_ID}
+      nextUrl={NEXT_URL}
     >
       <p>
         Ninguém te conta isso: nos primeiros 30 dias <b>todo mundo</b> perde os primeiros quilos — é água, é a animação do começo. O corpo muda de verdade a partir do <b>2º e 3º mês</b>. E é exatamente aí que a maioria cancela… e recupera tudo.
