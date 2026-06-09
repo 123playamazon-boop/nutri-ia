@@ -44,9 +44,18 @@ export async function POST(request: NextRequest) {
   }
 
   // 1) valida o secret (vem no corpo do webhook da Cakto)
-  const secret = pick(body, "secret", "data.secret");
-  const expected = process.env.CAKTO_WEBHOOK_SECRET;
+  // .trim() nos dois lados pra tolerar espaço/quebra de linha colados sem querer
+  const secret = (pick(body, "secret", "data.secret") ?? "").trim();
+  const expected = (process.env.CAKTO_WEBHOOK_SECRET ?? "").trim();
   if (!expected || secret !== expected) {
+    // diagnóstico (aparece em Vercel → Functions logs): mostra o tamanho e
+    // o começo de cada valor, sem expor o secret inteiro
+    console.error("Cakto webhook auth fail", {
+      recv_len: secret.length,
+      recv_head: secret.slice(0, 10),
+      exp_len: expected.length,
+      exp_head: expected.slice(0, 10),
+    });
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
