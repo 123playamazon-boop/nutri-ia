@@ -4,7 +4,7 @@ import { DEMO_COOKIE } from "@/lib/demo";
 import { hasSupabaseConfig, isDemoEnabled } from "@/lib/env";
 
 const DEMO_APP_PATHS = ["/dashboard", "/plano", "/diary", "/chat", "/onboarding", "/settings"];
-const PUBLIC_PATHS = ["/", "/login", "/signup", "/auth/callback", "/obrigado"];
+const PUBLIC_PATHS = ["/", "/login", "/signup", "/auth/callback", "/obrigado", "/oferta"];
 
 function isPublicPath(pathname: string): boolean {
   return PUBLIC_PATHS.some((p) =>
