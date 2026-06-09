@@ -242,6 +242,12 @@ function Quiz({
 
       {/* landing sentence — só na 1ª pergunta */}
       {step === 0 && (
+        <>
+          <img
+            src="/variedade-pratos.jpg"
+            alt=""
+            className="rounded-xl object-cover h-48 w-full mb-6"
+          />
         <div className="text-center mb-6">
           <div className="inline-block rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-extrabold tracking-widest uppercase px-3 py-1.5 mb-3">
             Diagnóstico de 30 segundos
@@ -254,6 +260,7 @@ function Quiz({
             Responda 8 perguntas rápidas e a nossa IA monta, em 1 minuto, um plano de 30 dias feito pro SEU corpo, sua rotina e o que você gosta de comer — com cardápio novo a cada 7 dias.
           </p>
         </div>
+        </>
       )}
 
       {/* progresso */}
@@ -406,6 +413,12 @@ function Offer({ answers }: { answers: Record<string, string> }) {
         {/* card resumo do perfil */}
         <div className="mt-6 rounded-2xl border border-border bg-white p-5 shadow-sm">
           <p className="text-[11px] font-extrabold uppercase tracking-widest text-primary mb-3">Seu plano-espelho inclui</p>
+          <p className="text-sm font-semibold text-center mb-3">É isso que você vai comer</p>
+          <div className="grid grid-cols-3 gap-2 mb-4">
+            <img src="/prato-principal.jpg" alt="" className="rounded-lg object-cover aspect-square w-full" />
+            <img src="/cafe-da-manha.jpg" alt="" className="rounded-lg object-cover aspect-square w-full" />
+            <img src="/salmao.jpg" alt="" className="rounded-lg object-cover aspect-square w-full" />
+          </div>
           <ul className="space-y-2.5 text-[15px]">
             {[
               "Plano completo de 30 dias com cardápio novo a cada 7 dias — 35 receitas por semana, sem repetir",
