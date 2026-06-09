@@ -22,11 +22,13 @@ function LoginForm() {
   const [password, setPassword] = useState(IS_DEMO ? DEMO_PASSWORD : "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setInfo("");
 
     if (IS_DEMO) {
       const res = await fetch("/api/demo/login", {
@@ -66,6 +68,28 @@ function LoginForm() {
       provider: "google",
       options: { redirectTo: `${window.location.origin}/auth/callback` },
     });
+  };
+
+  const handleForgot = async () => {
+    if (IS_DEMO) return;
+    if (!email) {
+      setError("Digite seu email no campo acima primeiro.");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    setInfo("");
+    try {
+      await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+    } catch {
+      // resposta sempre genérica
+    }
+    setInfo("Se houver uma conta com esse email, enviamos uma senha nova. Confira sua caixa de entrada e o spam.");
+    setLoading(false);
   };
 
   return (
@@ -120,8 +144,21 @@ function LoginForm() {
             <div>
               <Label htmlFor="password">Senha</Label>
               <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              {!IS_DEMO && (
+                <div className="mt-2 text-right">
+                  <button
+                    type="button"
+                    onClick={handleForgot}
+                    disabled={loading}
+                    className="text-sm text-primary hover:underline"
+                  >
+                    Esqueci minha senha
+                  </button>
+                </div>
+              )}
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
+            {info && <p className="text-sm text-primary">{info}</p>}
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Entrar"}
             </Button>
