@@ -142,7 +142,7 @@ const RESTRICAO_TXT: Record<string, string> = {
   intolerancia: "zero lactose/glúten quando você marcou",
   gravidez: "segurança pra gestante/pós-parto",
   veg: "100% vegetariano",
-  nenhuma: "sem restrições desnecessárias",
+  nenhuma: "liberdade total no cardápio",
 };
 const AMA_TXT: Record<string, string> = {
   pao: "pão no café",
@@ -262,7 +262,7 @@ function Quiz({
           className="h-full rounded-full bg-primary"
           initial={false}
           animate={{ width: `${pct}%` }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.18 }}
         />
       </div>
       <p className="text-right text-[11px] font-semibold text-muted-foreground mb-4">
@@ -372,7 +372,7 @@ function Offer({ answers }: { answers: Record<string, string> }) {
   }, []);
 
   const foco = ZONA_FOCO[answers.zona] ?? "emagrecimento";
-  const restr = RESTRICAO_TXT[answers.restricao] ?? "sem restrições desnecessárias";
+  const restr = RESTRICAO_TXT[answers.restricao] ?? "liberdade total no cardápio";
   const ama = AMA_TXT[answers.ama] ?? "o que você gosta";
   const meta = OBJ_META[answers.objetivo] ?? "emagrecer com saúde";
 
@@ -409,7 +409,7 @@ function Offer({ answers }: { answers: Record<string, string> }) {
           <ul className="space-y-2.5 text-[15px]">
             {[
               "Plano completo de 30 dias com cardápio novo a cada 7 dias — 35 receitas por semana, sem repetir",
-              "Lista de compras pronta + passo a passo com foto de cada receita",
+              "Lista de compras pronta + passo a passo de cada receita",
               "Calorias e macros já calculados pro SEU objetivo — você não precisa contar nada",
               "Ajuste automático conforme você registra o que comeu",
             ].map((t) => (
