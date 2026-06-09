@@ -84,6 +84,24 @@ export async function POST(request: NextRequest) {
 
   const admin = getSupabaseAdmin();
   try {
+    // DEBUG: diagnóstico de credenciais (aparece em Vercel → Functions logs)
+    const srk = (process.env.SUPABASE_SERVICE_ROLE_KEY ?? "").trim();
+    let srkRole = "n/a", srkRef = "n/a";
+    try {
+      const p = JSON.parse(Buffer.from(srk.split(".")[1] ?? "", "base64").toString());
+      srkRole = String(p.role); srkRef = String(p.ref);
+    } catch { /* não é JWT */ }
+    console.log("Cakto webhook env check", {
+      srk_len: srk.length,
+      srk_head: srk.slice(0, 6),
+      srk_role: srkRole,
+      srk_ref: srkRef,
+      url: (process.env.NEXT_PUBLIC_SUPABASE_URL ?? "").slice(8, 36),
+      resend_len: (process.env.RESEND_API_KEY ?? "").length,
+      resend_head: (process.env.RESEND_API_KEY ?? "").slice(0, 4),
+      email_from: process.env.EMAIL_FROM,
+    });
+
     // cliente já tem conta? (ex.: cada upsell dispara um webhook)
     const { data: list } = await admin.auth.admin.listUsers({ page: 1, perPage: 1000 });
     const existing = list?.users.find((u) => u.email?.toLowerCase() === email);
@@ -111,9 +129,16 @@ export async function POST(request: NextRequest) {
     await admin.from("subscriptions").update({ status: "active", plan: "cakto" }).eq("user_id", userId);
 
     const loginUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/login?welcome=1`;
-    await sendWelcomeCredentialsEmail({ to: email, password: tempPassword, loginUrl });
+    // e-mail é best-effort: se falhar, a conta já está criada — não derruba o webhook
+    let emailSent = false;
+    try {
+      await sendWelcomeCredentialsEmail({ to: email, password: tempPassword, loginUrl });
+      emailSent = true;
+    } catch (mailErr) {
+      console.error("Cakto webhook: e-mail falhou, conta criada mesmo assim:", mailErr);
+    }
 
-    return NextResponse.json({ received: true, action: "created" });
+    return NextResponse.json({ received: true, action: "created", emailSent });
   } catch (err) {
     console.error("Cakto webhook error:", err);
     return NextResponse.json({ error: "processing failed" }, { status: 500 });
