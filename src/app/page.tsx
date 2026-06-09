@@ -383,15 +383,15 @@ function Offer({ answers }: { answers: Record<string, string> }) {
   const ama = AMA_TXT[answers.ama] ?? "o que você gosta";
   const meta = OBJ_META[answers.objetivo] ?? "emagrecer com saúde";
 
-  const goCheckout = () => {
+  const [showExit, setShowExit] = useState(false); useEffect(() => { let shown = false; const trigger = () => { if (!shown) { shown = true; setShowExit(true); } }; const onLeave = (e: MouseEvent) => { if (e.clientY <= 0) trigger(); }; document.addEventListener("mouseleave", onLeave); const t = setTimeout(trigger, 20000); return () => { document.removeEventListener("mouseleave", onLeave); clearTimeout(t); }; }, []); const goCheckout = () => {
     setLoading(true);
     const url = CAKTO_CHECKOUT_URL + buildQuery({ ...answers, src: "quiz" });
     window.location.href = url;
   };
 
   return (
-    <div className="pb-28">
-      {/* barra de reserva */}
+    <div className="pb-28">{showExit && (<div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4" onClick={() => setShowExit(false)}><div className="w-full max-w-sm rounded-2xl bg-white p-6 text-center shadow-2xl" onClick={(e) => e.stopPropagation()}><p className="text-2xl font-extrabold">Peraí 👋</p><p className="mt-2 text-sm text-muted-foreground">Você fez o quiz inteiro — seria uma pena perder seu plano de R$14,99 agora. Ele só fica reservado por mais alguns minutos; depois volta pra R$39,90.</p><Button className="mt-5 w-full" onClick={goCheckout}>QUERO MEU PLANO AGORA</Button><button className="mt-3 block w-full text-xs text-muted-foreground underline" onClick={() => setShowExit(false)}>não, prefiro continuar como tô</button></div></div>)}
+      <div className="bg-white text-center text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] text-muted-foreground py-2 px-3 border-b border-border">Movido por Espelhamento Metabólico™ — seu cardápio montado sob medida, não tirado de prateleira</div>{/* barra de reserva */}
       <div className="bg-primary text-primary-foreground text-center text-[13px] font-semibold py-2 px-3">
         ✓ Seu plano está reservado por <span className="tabular-nums font-bold">{mm}:{ss}</span> — depois a vaga volta pra fila
       </div>
