@@ -383,7 +383,7 @@ function Offer({ answers }: { answers: Record<string, string> }) {
   const ama = AMA_TXT[answers.ama] ?? "o que você gosta";
   const meta = OBJ_META[answers.objetivo] ?? "emagrecer com saúde";
 
-  const [showExit, setShowExit] = useState(false); useEffect(() => { let shown = false; const trigger = () => { if (!shown) { shown = true; setShowExit(true); } }; const onLeave = (e: MouseEvent) => { if (e.clientY <= 0) trigger(); }; document.addEventListener("mouseleave", onLeave); const t = setTimeout(trigger, 20000); return () => { document.removeEventListener("mouseleave", onLeave); clearTimeout(t); }; }, []); const goCheckout = () => {
+  const [showExit, setShowExit] = useState(false); useEffect(() => { let shown = false; const trigger = () => { if (!shown) { shown = true; setShowExit(true); } }; const onLeave = (e: MouseEvent) => { if (e.clientY <= 0) trigger(); }; document.addEventListener("mouseleave", onLeave); const t = setTimeout(trigger, 20000); return () => { document.removeEventListener("mouseleave", onLeave); clearTimeout(t); }; }, []); const goCheckout = () => { if (typeof window !== 'undefined' && (window as any).fbq) { (window as any).fbq('track', 'InitiateCheckout'); }
     setLoading(true);
     const url = CAKTO_CHECKOUT_URL + buildQuery({ ...answers, src: "quiz" });
     window.location.href = url;
