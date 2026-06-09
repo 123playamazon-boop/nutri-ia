@@ -330,7 +330,7 @@ export function MealPlanView({ plan, userName, gamification, onMealComplete }: M
           </p>
 
           <div className="space-y-2.5">
-            {Object.entries(currentDay.meals).map(([key, meal]) => (
+            {Object.entries(currentDay.meals).sort(([a],[b])=>Object.keys(MEAL_LABELS).indexOf(a)-Object.keys(MEAL_LABELS).indexOf(b)).map(([key, meal]) => (
               <MealRow
                 key={key}
                 meal={meal as Meal}
